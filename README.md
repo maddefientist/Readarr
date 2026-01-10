@@ -1,22 +1,71 @@
-# Announcement: Retirement of Readarr
+# Readarr Revival - OpenLibrary Edition
 
-We would like to announce that the [Readarr project](<https://github.com/Readarr/Readarr>) has been retired. This difficult decision was made due to a combination of factors: the project's metadata has become unusable, we no longer have the time to remake or repair it, and the community effort to transition to using Open Library as the source has stalled without much progress.
+**This is a community revival fork of Readarr.** The original project was retired due to metadata source issues. This fork addresses those issues and brings Readarr back to production-ready status.
 
-Third-party metadata mirrors exist, but as we're not involved with them at all, we cannot provide support for them. Use of them is entirely at your own risk. The most popular mirror appears to be [rreading-glasses](<https://github.com/blampe/rreading-glasses>).
+## What's New in This Fork
 
-Without anyone to take over Readarr development, we expect it to wither away, so we still encourage you to seek alternatives to Readarr.
+### ✅ Complete Metadata Overhaul
+- **Replaced broken BookInfo** with **Open Library** integration
+- Resilient metadata fetching with retry logic and circuit breakers
+- Aggressive caching (30-90 day TTLs) to minimize API dependencies
+- Graceful degradation when metadata services are unavailable
 
-## Key Points:
-- **Effective Immediately**: The retirement takes effect immediately. Please stay tuned for any possible further communications.
-- **Support Window**: We will provide support during a brief transition period to help with troubleshooting non metadata related issues.
-- **Alternative Solutions**: Users are encouraged to explore and adopt any other possible solutions as alternatives to Readarr.
-- **Opportunities for Revival**: We are open to someone taking over and revitalizing the project. If you are interested, please get in touch.
-- **Gratitude**: We extend our deepest gratitude to all the contributors and community members who supported Readarr over the years.
+### ✅ Modernized Stack
+- **Upgraded to .NET 8 LTS** (supported through November 2026)
+- Updated all dependencies for security and compatibility
+- Improved performance and security posture
 
-Thank you for being part of the Readarr journey. For any inquiries or assistance during this transition, please contact our team.
+### ✅ Docker-First Deployment
+- Production-ready Dockerfile with multi-stage builds
+- Docker Compose for easy deployment
+- Health checks and proper signal handling
+- Both SQLite and PostgreSQL support
 
-Sincerely,  
-The Servarr Team
+### ✅ Improved Operations
+- Automated housekeeping (33 maintenance tasks)
+- Comprehensive health monitoring
+- Backup and restore procedures
+- Detailed operational documentation
+
+### ✅ CI/CD & Security
+- GitHub Actions for automated builds and tests
+- Dependabot for dependency updates
+- Security scanning (CodeQL, Trivy, TruffleHog)
+- Vulnerability disclosure policy
+
+## Quick Start (Docker)
+
+```bash
+git clone https://github.com/maddefientist/Readarr.git
+cd Readarr
+cp .env.example .env
+# Edit .env with your settings
+docker compose up -d
+```
+
+Access at: http://localhost:8787
+
+## Documentation
+
+- **[Development Guide](docs/DEV.md)** - Building and contributing
+- **[Deployment Guide](docs/DEPLOYMENT.md)** - Docker and production deployment
+- **[Operations Guide](docs/OPERATIONS.md)** - Monitoring, backup, troubleshooting
+
+## Revival Status
+
+| Component | Status |
+|-----------|--------|
+| .NET 8 Upgrade | ✅ Complete |
+| Open Library Integration | ✅ Complete |
+| Docker Deployment | ✅ Complete |
+| CI/CD Pipeline | ✅ Complete |
+| Documentation | ✅ Complete |
+
+---
+
+## Original README
+
+> **Note from original Servarr team:** The [Readarr project](https://github.com/Readarr/Readarr) was officially retired in June 2025 due to metadata source issues. This community fork addresses those issues.
 
 # Readarr
 

@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  readarr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: readarr
+    image: readarr:latest
+    restart: unless-stopped
+    ports:
+      - "${READARR_PORT:-8787}:8787"
+    volumes:
+      - readarr-config:/config
+      - ${BOOKS_PATH:-./books}:/books
+      - ${DOWNLOADS_PATH:-./downloads}:/downloads
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-UTC}
+      - READARR__INSTANCE_NAME=${READARR__INSTANCE_NAME:-Readarr}
+      - READARR__BRANCH=${READARR__BRANCH:-develop}
+      - READARR__LOG_LEVEL=${READARR__LOG_LEVEL:-info}
+      # PostgreSQL connection (optional - leave commented for SQLite)
+      # - READARR__POSTGRES__HOST=postgres
+      # - READARR__POSTGRES__PORT=5432
+      # - READARR__POSTGRES__USER=${POSTGRES_USER:-readarr}
+      # - READARR__POSTGRES__PASSWORD=${POSTGRES_PASSWORD}
+      # - READARR__POSTGRES__MAINDB=${POSTGRES_MAINDB:-readarr-main}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8787/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - readarr-network
+
+  # Uncomment to use PostgreSQL instead of SQLite
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: readarr-postgres
+  #   restart: unless-stopped
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER:-readarr}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRES_DB=${POSTGRES_MAINDB:-readarr-main}
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   networks:
+  #     - readarr-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-readarr}"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+volumes:
+  readarr-config:
+    driver: local
+  # postgres-data:
+  #   driver: local
+
+networks:
+  readarr-network:
+    driver: bridge
