@@ -8,7 +8,7 @@ Readarr provides a comprehensive health check API:
 
 ```bash
 curl http://localhost:8787/api/v1/health \
-  -H "X-Api-Key: YOUR_API_KEY"
+  -H "X-Api-Key: YOUR_READARR_API_KEY"
 ```
 
 **Health Check Categories:**
@@ -60,7 +60,7 @@ scrape_configs:
       - targets: ['localhost:8787']
     metrics_path: '/api/v1/health'
     params:
-      apikey: ['YOUR_API_KEY']
+      apikey: [YOUR_READARR_API_KEY]
 ```
 
 **3. Log Aggregation:**
@@ -106,7 +106,7 @@ Readarr performs automatic maintenance tasks daily:
 Trigger manual housekeeping:
 ```bash
 curl -X POST http://localhost:8787/api/v1/command \
-  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "X-Api-Key: YOUR_READARR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"name": "housekeeping"}'
 ```
